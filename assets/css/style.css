@@ -1,0 +1,2463 @@
+/* --- 1. Import Google Fonts --- */
+/* เราจะนำเข้าฟอนต์ Prompt ที่มีน้ำหนักต่างๆ กันมาใช้งาน */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap');
+
+/* --- 2. กำหนด CSS Variables (แม่แบบสีและฟอนต์) --- */
+/* การทำแบบนี้จะช่วยให้เราเปลี่ยนสีทั้งเว็บได้ง่ายๆ ในอนาคต แค่มาแก้ที่นี่ที่เดียว */
+:root {
+    --primary-color: #2FAAA8;    /* สีเขียวน้ำทะเล */
+    --secondary-color: #B7D971;  /* สีเขียวมะนาว */
+    --background-color: #F8F9FA; /* สีเทาอ่อนมากๆ */
+    --surface-color: #FFFFFF;    /* สีของพื้นหลังการ์ด, กล่องข้อความ */
+    --text-color: #0F172B;       /* สีเทาเข้มสำหรับเนื้อหา */
+    --heading-color: #212529;    /* สีดำเกือบสนิทสำหรับหัวข้อ */
+    --light-gray: #e9ecef;       /* สีเทาอ่อนสำหรับเส้นคั่น หรือพื้นหลังรอง */
+    --white-color: #ffffff;
+
+    --font-family-base: 'Prompt', sans-serif;
+}
+
+/* --- 3. กำหนดสไตล์พื้นฐาน (Base Styles) --- */
+/* กำหนดสไตล์ให้กับแท็ก HTML ทั่วไป */
+
+body {
+    font-family: var(--font-family-base);
+    font-weight: 400; /* น้ำหนักปกติสำหรับเนื้อหา */
+    background-color: #ffffff; /* เขียวอ่อนแบบสุขภาพ */
+    background: url(../images/bg-icon.png) center center repeat;
+    background-size: contain;
+    color: var(--text-color);
+    line-height: 1.7; /* เพิ่มระยะห่างระหว่างบรรทัดให้อ่านง่ายขึ้น */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h2, h3, h4, h6 {
+font-family: 'Prompt', sans-serif;
+font-weight: 700 !important;
+}
+
+h1 {
+  font-family: 'Prompt', sans-serif;
+font-weight: 700 !important;
+font-size: 50px;  
+}
+
+h5 {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 700 !important;
+    color: #000000;
+}
+
+/*ตัวหนังสือวางแผน*/
+  .typewriter-container {
+    font-weight: bold;
+    line-height: 1.4;
+    height: auto;
+  }
+
+  .typewriter-container:hover{
+     transition: transform 0.3s ease; /* ให้มี animation ลื่นๆ */
+     transform: scale(1.05); /* ซูมเข้า 5% */
+  }
+
+  .type-line {
+    color: #ffffff;
+    min-height: 1.5em; /* กำหนดความสูงไว้ล่วงหน้า */
+    visibility: hidden; /* ซ่อนเริ่มต้น */
+  }
+
+  .type-line.visible {
+    visibility: visible;
+  }
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #258a88; /* ทำให้สีเข้มขึ้นเล็กน้อยเมื่อเอาเมาส์ไปชี้ */
+   
+}
+
+.content-area {
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
+/* [NEW] Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .content-area {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+.small-text {
+    font-size: 16px;
+}
+
+/* --- 4. กำหนดสไตล์พื้นฐานสำหรับ Components (ตัวอย่าง) --- */
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white-color);
+}
+.btn-primary:hover {
+    background-color: #258a88; /* สีเข้มขึ้น */
+    border-color: #258a88;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-color);
+}
+.btn-secondary:hover {
+    background-color: #a6c465; /* สีเข้มขึ้น */
+    border-color: #a6c465;
+}
+
+.card {
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* เพิ่มเงาเล็กน้อยให้ดูมีมิติ */
+}
+
+/********************************************************** Navbar ********************************************************************/
+
+
+@media (min-width: 992px) {
+  .sticky-top {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+  }
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    position: relative;
+    margin-left: 25px;
+    padding: 25px 0;
+    font-size: 16px;
+    color: var(--white-color) !important;
+    text-transform: uppercase;
+    font-weight: 500;
+    outline: none;
+    transition: .5s;
+}
+
+.sticky-top.navbar-dark .navbar-nav .nav-link {
+    padding: 20px 0;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--secondary-color) !important;
+}
+
+.navbar-dark .navbar-brand img {
+    max-height: 60px;
+    transition: .5s;
+}
+
+.sticky-top.navbar-dark .navbar-brand img {
+    max-height: 45px;
+}
+
+@media (max-width: 991.98px) {
+    .sticky-top.navbar-dark {
+        position: relative;
+    }
+
+    .navbar-dark .navbar-collapse {
+        margin-top: 15px;
+        border-top: 1px solid #ffffff1a
+    }
+
+    .navbar-dark .navbar-nav .nav-link,
+    .sticky-top.navbar-dark .navbar-nav .nav-link {
+        padding: 10px 0;
+        margin-left: 0;
+    }
+
+    .navbar-dark .navbar-brand img {
+        max-height: 40px;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar-dark {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: var(--text-color) !important;
+    }
+    
+    .sticky-top.navbar-dark {
+        position: fixed;
+        background: var(--text-color) !important;
+    }
+}
+
+
+
+/******************************************************* --- Footer Styles --- *********************************************************/
+.site-footer {
+    background-color: var(--text-color); /* ใช้สีเทาเข้มจาก Design System ของเรา */
+    color: var(--light-gray); /* ใช้สีเทาอ่อนสำหรับข้อความใน Footer */
+    font-size: 0.9rem;
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
+}
+
+.site-footer h5 {
+    color: var(--white-color); /* ทำให้หัวข้อใน Footer เป็นสีขาว */
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.site-footer a {
+    color: var(--light-gray);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: var(--primary-color); /* เปลี่ยนเป็นสีหลักเมื่อเมาส์ชี้ */
+    text-decoration: underline;
+}
+
+.footer-links {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-copyright {
+    border-top: 1px solid #4a5568; /* เส้นคั่นสีเทาเข้มขึ้นมาหน่อย */
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+/************************************************ --- Dashboard Page Styles --- ********************************************************/
+
+/* Welcome Section */
+.welcome-section {
+    background-color: var(--surface-color);
+    padding: 2rem 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Feature Cards */
+
+.service-item {
+    background-color: #ffffff;
+    transition: .5s;
+}
+
+.service-item1:hover {
+    background-image: linear-gradient(135deg, #2FAAA8 0%, #46c9c7 100%);
+}
+
+.service-item2:hover {
+    background-image: linear-gradient(135deg, #ffb406 0%, #ffcd5b 100%);
+}
+
+.service-item3:hover {
+    background-image: linear-gradient(135deg, #B7D971 0%, #d3e899 100%);
+}
+
+.service-item4:hover {
+    background-image: linear-gradient(135deg, #7d71d9 0%, #a298e6 100%);
+}
+
+.service-item * {
+    transition: .5s;
+}
+
+.service-item:hover * {
+    color: var(--surface-color) !important;
+    transform: translateY(-5px);
+
+}
+
+/* ปุ่มแก้ไขโปรไฟล์ */
+.btn-edit-profile {
+  font-size: 0.9rem;
+  border-radius: 20px;
+  padding: 6px 14px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.btn-edit-profile:hover {
+  background-color: #B7D971;
+  color: #000;
+  border-color: #B7D971;
+}
+
+/* Health Stat Cards */
+.health-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+}
+
+.health-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* หัวข้อการ์ด */
+.health-card h5 {
+  color: #6c757d; /* เทา Bootstrap */
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* ค่าตัวเลข */
+.health-card h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* การ์ด TDEE เน้นพิเศษ */
+.health-card.tdee {
+  background-color: #f1f8ff;
+}
+
+.health-card.tdee h2 {
+  color: #2FAAA8;
+}
+
+/* Style พิเศษสำหรับ TDEE card */
+.stat-card.stat-card--highlight {
+    background-color: #f0f7ff; /* สีฟ้าอ่อนๆ */
+    border-color: #d9e8fa;
+}
+.stat-card.stat-card--highlight h2 {
+    color: var(--heading-color); /* ในพื้นหลังสีอ่อน ใช้สีตัวอักษรเข้ม */
+}
+
+/* --- ใช้ส่วนนี้ในการปรับขนาดฟอนต์ของกล่องคำแนะนำ --- */
+.alert .alert-heading {
+    font-size: 25px; /* <<< ปรับขนาดหัวข้อที่นี่ */
+    font-weight: bold;
+}
+
+.alert p {
+    font-size: 22px; /* <<< ปรับขนาดเนื้อหาที่นี่ */
+}
+
+/* --- Hero Header Styles --- */
+.hero-header {
+  /* กำหนดพื้นหลังเป็นรูปภาพ และมีการไล่สีดำโปร่งแสงทับเพื่อให้อ่านข้อความง่ายขึ้น */
+    background: linear-gradient(rgba(15, 23, 43, .9), rgba(15, 23, 43, .9)), url('../images/banner/bg-hero.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 130px;
+    padding-bottom: 60px;
+}
+
+/* ทำให้รูปภาพวงล้ออาหารหมุนช้าๆ (เฉพาะ banner เท่านั้น) */
+#default-banner-view .hero-header img {
+    animation: imgRotate 50s linear infinite;
+}
+
+@keyframes imgRotate { 
+    100% { 
+        transform: rotate(360deg); 
+    } 
+}
+
+/* ป้องกันไม่ให้รูปในแผนหมุน */
+.meal-content img,
+.current-day-display img {
+    animation: none !important;
+    transform: none !important;
+}
+
+.nav-pills .nav-link.active {
+    background-image: linear-gradient(135deg, #2FC2A0 0%, #B7D971 100%); /* สีพื้นหลังตอนเลือก */
+    color: #fff !important;
+    border-radius: 0.5rem;
+}
+
+.nav-pills .nav-link.active i {
+    color: #fff !important; /* เปลี่ยนสีไอคอนตอน active */
+}
+
+.nav-pills .nav-link.active small,
+.nav-pills .nav-link.active h6 {
+    color: #fff !important; /* เปลี่ยนข้อความด้านใน */
+}
+
+.menu-item-hover {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.menu-item-hover:hover {
+    border-color: #0d6efd; /* สีฟ้า Bootstrap (หรือเปลี่ยนเป็น #007bff ได้) */
+    background-color: #f0f8ff; /* พื้นหลังอ่อนๆ เมื่อ hover (ไม่บังคับ) */
+}
+
+.progress-day-card {
+        transition: all 0.3s ease-in-out;
+        border: 2px solid transparent;
+    }
+    .progress-day-card.active-day {
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+    }
+    .meal-status-display {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 10px;
+        position: relative;
+    }
+    .meal-icons {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: #ccc;
+    }
+    .meal-icons .active-meal {
+        color: #198754; /* สีเขียวเมื่อเป็นมื้อปัจจุบัน */
+    }
+    .meal-content {
+        position: relative;
+        text-align: center;
+    }
+    .meal-content img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .meal-content .meal-checkbox {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+    .meal-info h6 {
+        margin-bottom: 2px;
+        font-size: 0.9rem;
+    }
+    .meal-info .calories {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+    .day-completed-message {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 190px; /* ความสูงเท่ากับรูป + ชื่อเมนู */
+        color: #198754;
+    }
+    .day-completed-message i {
+        font-size: 3rem;
+    }
+
+/*--------------------------------------------------------- Custom Planner Page Styles -------------------------------------------------- */
+.planner-section {
+    background-color: var(--surface-color);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    height: 100%;
+}
+
+.planner-section-header {
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
+.recipe-search-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 0.25rem;
+    margin-bottom: 1rem; /* เพิ่มจาก 0.75rem เป็น 1rem */
+    transition: box-shadow 0.2s ease;
+}
+.recipe-search-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.meal-plan-card .list-group-item {
+    padding: 0.75rem 1rem;
+}
+.meal-plan-card .list-group-item button {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+.meal-plan-card .list-group-item:hover button {
+    opacity: 1;
+}
+
+/* Nutrition Summary Cards */
+.nutrition-summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.nutrition-stat-card {
+    background-color: var(--background-color);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+.nutrition-stat-card .label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+.nutrition-stat-card .value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.nutrition-stat-card .unit {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+        .planner-section { padding: 20px; background-color: #f8f9fa; border-radius: 8px; }
+        .planner-section-header { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; margin-bottom: 20px; }
+        .recipe-search-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #e9ecef; }
+        .nutrition-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .nutrition-stat-card { background: #fff; padding: 10px; border-radius: 5px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .nutrition-stat-card .label { font-size: 0.8em; color: #6c757d; }
+        .nutrition-stat-card .value { font-size: 1.2em; font-weight: bold; }
+        .calendar-day { min-height: 120px; padding: 8px; }
+        .day-plan-summary {
+            background-color: #e7f5ff;
+            border: 1px solid #b3e0ff;
+            border-radius: 4px;
+            padding: 5px;
+            margin-top: 5px;
+            font-size: 0.8em;
+            text-align: left;
+        }
+        .day-plan-summary strong { color: #0056b3; }
+        #search-results { max-height: 450px; overflow-y: auto; }
+        .modal-body { background-color: #f4f7f6; }
+
+
+     
+    .calendar-day.has-plan {
+        border: 2px solid #0D6EFD; /* สีน้ำเงิน Primary ของ Bootstrap */
+        border-radius: 0.375rem; /* ทำให้ขอบมน */
+        background-color: #e7f1ff;
+    }
+    .day-plan-summary {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #0a58ca;
+    }
+    .table th {
+        background-color: #f8f9fa;
+    }
+    .btn:disabled {
+        cursor: not-allowed;
+    }
+
+    .calendar-day.has-plan { border: 2px solid #0D6EFD; border-radius: 0.375rem; background-color: #e7f1ff; }
+    .day-plan-summary { font-size: 0.8rem; font-weight: bold; color: #0a58ca; }
+    .table th { background-color: #f8f9fa; }
+    .btn:disabled { cursor: not-allowed; opacity: 0.6; }
+    .recipe-search-item { display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #eee; cursor: pointer; }
+    .recipe-search-item:hover { background-color: #f1f1f1; }
+    .planner-section { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; background-color: #fcfcfc; }
+    .planner-section-header { border-bottom: 2px solid #0D6EFD; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+    #search-results { flex-grow: 1; min-height: 0; overflow-y: auto; border: 1px solid #eee; border-radius: 5px; }
+    .nutrition-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; }
+    .nutrition-stat-card { background-color: #f8f9fa; border-radius: 8px; padding: 1rem; text-align: center; }
+    .nutrition-stat-card .label { font-size: 0.8rem; color: #6c757d; margin-bottom: 0.25rem; }
+    .nutrition-stat-card .value { font-size: 1.4rem; font-weight: bold; color: #0D6EFD; }
+    .nutrition-stat-card .unit { font-size: 0.8rem; }
+    .day-actions { display: none; gap: 5px; margin-top: 5px; justify-content: center; }
+    .calendar-day.has-plan .day-actions { display: flex; }
+    #mini-calendar-container table { width: 100%; }
+    #mini-calendar-container th { text-align: center; font-weight: normal; color: #6c757d; font-size: 0.9em; }
+    #mini-calendar-container td { text-align: center; padding: 4px; border: 1px solid #f0f0f0; }
+    .mini-calendar-day { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 50px; cursor: pointer;}
+    .mini-calendar-day.disabled { color: #ccc; background-color: #f8f9fa; cursor: not-allowed; }
+    .mini-calendar-day.disabled .form-check-input, .mini-calendar-day.disabled .form-check-label { pointer-events: none; }
+
+        /* สไตล์สำหรับวันที่มีแผนในปฏิทินขนาดเล็ก (Copy Modal) */
+    .mini-calendar-day.has-plan {
+        background-color: #d1e7dd; /* สีเขียวอ่อนแบบ Bootstrap (bg-success-subtle) */
+        color: #0f5132;
+        border-radius: 0.3rem;
+        font-weight: bold;
+    }
+    /* ทำให้ label ของ checkbox ขยับมาตรงกลางสวยงาม */
+    .mini-calendar-day.has-plan .form-check-label {
+        cursor: pointer;
+    }
+
+    /* === บังคับให้คอลัมน์ปฏิทินกว้างเท่ากัน === */
+.table-bordered {
+    table-layout: fixed; /* บังคับให้คอลัมน์มีความกว้างคงที่และเท่ากัน */
+    width: 100%;       /* ทำให้ตารางขยายเต็มพื้นที่ */
+}
+
+/* === จัดการข้อความยาวในช่องปฏิทิน === */
+.calendar-day .day-plan-summary {
+    word-wrap: break-word; /* อนุญาตให้ข้อความยาวๆ ตัดขึ้นบรรทัดใหม่ได้ */
+}
+
+
+/* ------------------------------------------------------ Weekly Plan Page Styles ---------------------------------------------------- */
+.card-title {
+    font-weight: 600;
+}
+.card-body p {
+    font-size: 0.95rem;
+}
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.imgweek {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.imgweek:hover {
+    transform: scale(1.1);
+}
+
+/* ==== ตารางปฏิทิน ==== */
+.table-bordered {
+    border-color: #dee2e6;
+}
+
+.table td {
+    vertical-align: top;
+    padding: 12px 6px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.table td:hover {
+    background: rgba(0, 123, 255, 0.05);
+    cursor: pointer;
+}
+
+/* ==== วันที่ในเดือนปัจจุบัน ==== */
+.table td strong {
+    display: inline-block;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* ==== วันที่นอกเดือน (จาง) ==== */
+.table td.text-muted strong {
+    color: #aaa;
+}
+
+/* ==== ปุ่ม “ดูแผน” ==== */
+.table td .btn-outline-primary {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.table td .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* ==== Badge แคลอรี่ใน Modal ==== */
+.badge.bg-info {
+    background-color: #d0f0ff !important;
+    color: #0275d8 !important;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.4em 0.8em;
+}
+
+/* ==== การ์ดแสดงอาหารใน Modal ==== */
+.card-body.d-flex {
+    background: #fcfcfc;
+    border-radius: 12px;
+    transition: box-shadow 0.2s ease;
+}
+
+.card-body.d-flex:hover {
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+/* ==== ปุ่ม “สร้างแผนใหม่” / “กลับแดชบอร์ด” ==== */
+.btn-danger, .btn-primary {
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 0.6rem 1.4rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-danger:hover, .btn-primary:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* ==== Modal ==== */
+.modal-content {
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* ==== โลโก้ไอคอนต่าง ๆ ==== */
+.bi {
+    vertical-align: middle;
+}
+
+/* ==== Responsive การ์ดเมนูใน modal ==== */
+@media (max-width: 576px) {
+    .card-body.d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .card-body img {
+        margin-bottom: 0.5rem;
+    }
+
+    .badge {
+        margin-top: 0.5rem;
+    }
+}
+
+/* วันในปฏิทินที่มีแผน */
+.has-plan {
+    background-color: #e3f2fd !important; /* ฟ้าอ่อน */
+    border: 2px solid #2196f3 !important; /* ขอบเด่น */
+    box-shadow: inset 0 0 4px rgba(33, 150, 243, 0.4);
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.has-plan:hover {
+    background-color: #bbdefb !important;
+    cursor: pointer;
+}
+
+.th-sun {
+    background-color: #ffcdd2 !important; /* แดงอ่อน */
+    color: #c62828 !important;
+}
+.th-mon {
+    background-color: #fff9c4 !important; /* เหลืองอ่อน */
+    color: #f9a825 !important;
+
+}
+.th-tue {
+    background-color: #fccee8 !important; /* เขียวอ่อน */
+    color: #a14891 !important;
+}
+.th-wed {
+    background-color: #c8e6c9 !important; /* เขียวอ่อน */
+    color: #2e7d32 !important;
+
+}
+.th-thu {
+    background-color: #ffe0b2 !important; /* ส้มอ่อน */
+    color: #ef6c00 !important;
+
+}
+.th-fri {
+    background-color: #bbdefb !important; /* น้ำเงินอ่อน */
+    color: #1565c0 !important;
+
+}
+.th-sat {
+    background-color: #e1bee7 !important; /* ม่วงอ่อน */
+    color: #6a1b9a !important;
+
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #2FC2A0 0%, #B7D971 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* -------------------------------------------------------- Recipes Page Styles ------------------------------------------------------ */
+
+.recipe-card {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.recipe-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title,
+.card-text {
+  margin: 0 !important;
+}
+
+.nutri-info {
+    background-color: #2FAAA8;
+    color: #fff;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+/* -------------------------------------------------------- Recipe Detail Page Styles ------------------------------------------------- */
+
+.recipe-detail-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.recipe-main-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.recipe-stats-bar {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--surface-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--light-gray);
+    margin-bottom: 2.5rem;
+}
+
+.recipe-stat {
+    text-align: center;
+    color: var(--text-color);
+}
+
+.recipe-stat .icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.recipe-stat .value {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.recipe-stat .label {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.recipe-section-card {
+    background-color: var(--surface-color);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--light-gray);
+    height: 100%;
+}
+
+.recipe-section-card h4 {
+    margin-top: 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
+.recipe-ingredients-list {
+    list-style: none;
+    padding-left: 0;
+}
+.recipe-ingredients-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--light-gray);
+}
+.recipe-ingredients-list li::before {
+    content: '✓';
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-right: 0.75rem;
+}
+
+.recipe-instructions-list {
+    list-style: none;
+    padding-left: 0;
+    counter-reset: instructions-counter; /* เริ่มต้นตัวนับ */
+}
+.recipe-instructions-list li {
+    counter-increment: instructions-counter; /* เพิ่มค่าตัวนับ */
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+}
+.recipe-instructions-list li::before {
+    content: counter(instructions-counter); /* แสดงผลตัวเลข */
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-weight: 700;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 1rem;
+    flex-shrink: 0; /* ไม่ให้ตัวเลขถูกบีบ */
+}
+
+/* --- Page Header Styles --- */
+.page-header {
+    background-color: var(--light-gray);
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #dee2e6;
+}
+.page-header h1 {
+    margin-bottom: 0;
+    color: var(--primary-color);
+}
+
+/* ----------------------------------------------------- Glossary Page Styles -------------------------------------------------------- */
+.glossary-list dt { /* dt คือ คำศัพท์ (Term) */
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 2rem;
+}
+
+.glossary-list dd { /* dd คือ คำอธิบาย (Definition) */
+    margin-left: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--light-gray);
+    margin-top: 0.5rem;
+}
+
+/* Style for custom stat icons */
+.recipe-stat .icon .stat-icon-img {
+    height: 1.5rem !important; /* เพิ่ม !important เพื่อความแน่นอน */
+    width: auto !important;
+}
+
+/************************************************ --- Myplan Page Styles --- ********************************************************/
+    .profile-card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+    .profile-card:hover { transform: translateY(-5px); box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; }
+    .profile-card-icon { font-size: 1.5rem; }
+    #viewProfileModal .modal-body { background-color: #f8f9fa; }
+
+    /* Styles for the new two-column view modal */
+    #plan-day-nav .list-group-item { border-radius: 0.5rem; margin-bottom: 0.5rem; }
+    #plan-day-nav .list-group-item.active {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+    }
+    .day-detail-pane h5 { color: var(--bs-primary); }
+
+    /* Styles for Calendar View in Modal */
+    .calendar-table { width: 100%; text-align: center; border-collapse: collapse; }
+    .calendar-table th { padding: 0.5rem; font-weight: bold; color: #6c757d; }
+    .calendar-table thead th {
+        width: calc(100% / 7); /* Ensure equal width for header cells */
+    }
+    .calendar-table td {
+        border: 1px solid #dee2e6;
+        vertical-align: top;
+        text-align: left;
+        padding: 8px;
+        /* Make cells square and responsive */
+        width: calc(100% / 7);
+        aspect-ratio: 1 / 1;
+    }
+    .calendar-table td.day-with-plan {
+        background-color: #e2f5ea;
+        font-weight: bold;
+        color: #155724;
+    }
+    .calendar-table td.clickable-day { cursor: pointer; }
+    .calendar-table td.clickable-day:hover { background-color: #c8e6c9; }
+    .calendar-table td .day-number { font-size: 1.1rem; }
+    .calendar-table td.empty-day { background-color: #f8f9fa; }
+
+/* --- Responsive Calendar for Mobile --- */
+@media (max-width: 767px) {
+    .table-bordered {
+        table-layout: auto; /* Allow table to be more flexible */
+    }
+
+    .table th, .table td {
+        padding: 4px 2px; /* Reduce padding */
+        font-size: 0.8rem; /* Smaller font for headers and cell content */
+    }
+
+    .calendar-day {
+        min-height: auto; /* Remove fixed min-height */
+        padding: 4px;
+    }
+
+    .calendar-day strong {
+        font-size: 1rem; /* Adjust day number font size */
+    }
+
+    .calendar-day .btn {
+        font-size: 0.7rem; /* Smaller buttons */
+        padding: 2px 4px;
+    }
+
+    .day-plan-summary {
+        font-size: 0.65rem; /* Smaller summary text */
+        padding: 3px;
+        margin-top: 3px;
+    }
+
+    .day-actions {
+        gap: 2px; /* Reduce gap between action buttons */
+    }
+    
+    .day-actions .btn {
+        padding: 0 3px;
+    }
+}
+
+/* =====================================================
+   MOBILE RESPONSIVE STYLES 
+   ===================================================== */
+
+/* --- Global Mobile Adjustments --- */
+@media (max-width: 768px) {
+    /* Adjust main container padding */
+    .content-area {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    /* Typography adjustments */
+    h1 {
+        font-size: 28px !important;
+    }
+    
+    h2 {
+        font-size: 24px !important;
+    }
+    
+    h3 {
+        font-size: 20px !important;
+    }
+    
+    h4 {
+        font-size: 18px !important;
+    }
+    
+    h5 {
+        font-size: 16px !important;
+    }
+    
+    /* Button adjustments */
+    .btn {
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+    }
+    
+    .btn-sm {
+        font-size: 12px !important;
+        padding: 5px 10px !important;
+    }
+}
+
+/* --- Dashboard Page Mobile Styles --- */
+@media (max-width: 768px) {
+    /* Hero section adjustments */
+    .hero-header {
+        padding-top: 80px !important;
+        padding-bottom: 30px !important;
+    }
+    
+    .hero-header .row {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    .hero-header h1 {
+        font-size: 32px !important;
+    }
+    
+    .hero-header h3, .hero-header h4 {
+        font-size: 18px !important;
+    }
+    
+    .hero-header .small-text {
+        font-size: 14px !important;
+    }
+    
+    .hero-header img {
+        max-width: 80%;
+        margin: 20px auto;
+    }
+    
+    /* Typewriter animation */
+    .typewriter-container {
+        font-size: 20px !important;
+    }
+    
+    /* View toggle buttons */
+    .view-toggle-btn {
+        width: 35px !important;
+        height: 35px !important;
+        right: 10px !important;
+    }
+    
+    #show-banner-btn {
+        left: 10px !important;
+    }
+    
+    /* Progress tracker adjustments */
+    .progress-view-container {
+        padding: 15px !important;
+    }
+    
+    .progress-day-card {
+        flex: 0 0 280px; /* กว้าง 280px บน desktop */
+        margin-right: 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 15px;
+        padding: 15px;
+        background-color: #fff;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .progress-day-card.active-day {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.3);
+    }
+
+    .progress-day-card.completed {
+        background-color: #d1e7dd;
+        border-color: #0f5132;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+        .progress-day-card {
+            flex: 0 0 180px !important;
+            margin-right: 10px !important;
+            padding: 8px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .progress-day-card {
+            flex: 0 0 160px !important;
+        }
+    }
+    
+    .meal-icons i {
+        font-size: 0.9rem !important;
+        width: 28px !important;
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+    
+    .meal-content img {
+        height: 100px !important;
+    }
+    
+    /* Health cards */
+    .health-card {
+        padding: 12px !important;
+    }
+    
+    .health-card h5 {
+        font-size: 12px !important;
+    }
+    
+    .health-card h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    /* Service items (feature cards) */
+    .service-item i {
+        font-size: 2.5rem !important;
+    }
+    
+    .service-item h5 {
+        font-size: 14px !important;
+    }
+    
+    .service-item p {
+        font-size: 12px !important;
+    }
+    
+    /* Chart containers */
+    .chart-card {
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .chart-card h5 {
+        font-size: 16px !important;
+    }
+    
+    /* Alert boxes */
+    .alert .alert-heading {
+        font-size: 18px !important;
+    }
+    
+    .alert p {
+        font-size: 14px !important;
+    }
+    
+    .alert i {
+        font-size: 1.8rem !important;
+    }
+    
+    /* Menu tabs */
+    .nav-pills .nav-link {
+        padding: 8px !important;
+        margin: 0 5px !important;
+    }
+    
+    .nav-pills .nav-link i {
+        font-size: 1.5rem !important;
+    }
+    
+    .nav-pills .nav-link small {
+        font-size: 10px !important;
+    }
+    
+    .nav-pills .nav-link h6 {
+        font-size: 12px !important;
+    }
+    
+    /* Menu items */
+    .menu-item-hover {
+        padding: 8px !important;
+    }
+    
+    .menu-item-hover img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .menu-item-hover h5 {
+        font-size: 14px !important;
+    }
+    
+    .menu-item-hover small {
+        font-size: 12px !important;
+    }
+    
+    /* Plan timeline scroll */
+    .plan-day-timeline {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 20px;
+        scrollbar-width: thin;
+        scrollbar-color: #0d6efd #f1f1f1;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .plan-day-timeline::-webkit-scrollbar { 
+        height: 8px; 
+    }
+
+    .plan-day-timeline::-webkit-scrollbar-track { 
+        background: #f1f1f1; 
+        border-radius: 10px; 
+    }
+
+    .plan-day-timeline::-webkit-scrollbar-thumb { 
+        background: #0d6efd; 
+        border-radius: 10px; 
+    }
+
+    /* ซ่อน timeline บนมือถือ */
+    @media (max-width: 768px) {
+        .plan-day-timeline {
+            display: none !important;
+        }
+    }
+}
+
+/* --- Weekly Plan Dashboard Mobile Styles --- */
+@media (max-width: 768px) {
+    /* Calendar table */
+    .table-responsive {
+        min-height: 350px !important;
+    }
+    
+    .table th {
+        padding: 5px 2px !important;
+        font-size: 12px !important;
+    }
+    
+    .table td {
+        padding: 8px 4px !important;
+        font-size: 12px !important;
+    }
+    
+    .table td strong {
+        font-size: 14px !important;
+    }
+    
+    .table td .btn {
+        font-size: 10px !important;
+        padding: 2px 6px !important;
+    }
+    
+    /* Modal adjustments */
+    .modal-dialog {
+        margin: 10px !important;
+    }
+    
+    .modal-content {
+        border-radius: 10px !important;
+    }
+    
+    .modal-header {
+        padding: 12px !important;
+    }
+    
+    .modal-title {
+        font-size: 16px !important;
+    }
+    
+    .modal-body {
+        padding: 15px !important;
+    }
+    
+    /* Recipe cards in modal */
+    .modal .card {
+        margin-bottom: 10px !important;
+    }
+    
+    .modal .card-body {
+        padding: 10px !important;
+    }
+    
+    .modal .card-title {
+        font-size: 14px !important;
+    }
+    
+    .modal .card-text {
+        font-size: 12px !important;
+    }
+    
+    .modal .btn-group .btn {
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+    }
+    
+    /* Recipe image in modal */
+    .recipe-image {
+        height: 100px !important;
+    }
+}
+
+/* --- Custom Plan Page Mobile Styles --- */
+@media (max-width: 768px) {
+    /* Calendar navigation */
+    .btn-group-vertical {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 5px !important;
+    }
+    
+    /* Calendar day cells */
+    .calendar-day {
+        padding: 4px !important;
+        min-height: 80px !important;
+    }
+    
+    .calendar-day strong {
+        font-size: 14px !important;
+    }
+    
+    .calendar-day .btn {
+        font-size: 10px !important;
+        padding: 2px 4px !important;
+        margin-top: 4px !important;
+    }
+    
+    .day-plan-summary {
+        font-size: 10px !important;
+        padding: 2px !important;
+    }
+    
+    .day-actions {
+        gap: 2px !important;
+        margin-top: 3px !important;
+    }
+    
+    .day-actions .btn {
+        padding: 0 2px !important;
+        font-size: 10px !important;
+    }
+    
+    /* Planner modal adjustments */
+    .planner-section {
+        padding: 12px !important;
+    }
+    
+    .planner-section-header {
+        font-size: 16px !important;
+        margin-bottom: 10px !important;
+    }
+    
+    /* Search filters */
+    .planner-section .form-label {
+        font-size: 12px !important;
+    }
+    
+    .planner-section .form-control,
+    .planner-section .form-select {
+        font-size: 12px !important;
+        padding: 5px !important;
+    }
+    
+    /* Recipe search results */
+    #search-results {
+        min-height: 250px !important;
+        max-height: 300px !important;
+    }
+    
+    .recipe-search-item {
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .recipe-search-item img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .recipe-search-item h6 {
+        font-size: 12px !important;
+    }
+    
+    .recipe-search-item small {
+        font-size: 10px !important;
+    }
+    
+    /* Meal plan cards */
+    .meal-plan-card .card-header {
+        padding: 8px !important;
+        font-size: 12px !important;
+    }
+    
+    .meal-plan-card .list-group-item {
+        padding: 6px !important;
+        font-size: 11px !important;
+    }
+    
+    /* Nutrition summary grid */
+    .nutrition-summary-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    
+    .nutrition-stat-card {
+        padding: 8px !important;
+    }
+    
+    .nutrition-stat-card .label {
+        font-size: 10px !important;
+    }
+    
+    .nutrition-stat-card .value {
+        font-size: 1rem !important;
+    }
+    
+    .nutrition-stat-card .unit {
+        font-size: 10px !important;
+    }
+    
+    /* Mini calendar in copy modal */
+    .mini-calendar-day {
+        height: 35px !important;
+        font-size: 12px !important;
+    }
+    
+    #mini-calendar-container table {
+        font-size: 12px !important;
+    }
+    
+    #mini-calendar-container th {
+        font-size: 11px !important;
+        padding: 2px !important;
+    }
+    
+    #mini-calendar-container td {
+        padding: 2px !important;
+    }
+}
+
+/* --- Extra Small Devices (phones < 480px) --- */
+@media (max-width: 480px) {
+    /* Further typography reduction */
+    h1 {
+        font-size: 24px !important;
+    }
+    
+    h2 {
+        font-size: 20px !important;
+    }
+    
+    h3 {
+        font-size: 18px !important;
+    }
+    
+    /* Hero section */
+    .hero-header {
+        padding-top: 60px !important;
+    }
+    
+    .typewriter-container {
+        font-size: 16px !important;
+    }
+    
+    /* Progress cards */
+    .progress-day-card {
+        flex: 0 0 150px !important;
+    }
+    
+    /* Health cards - stack in single column */
+    .health-card h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Service items */
+    .service-item {
+        margin-bottom: 10px !important;
+    }
+    
+    /* Alert messages */
+    .alert {
+        padding: 10px !important;
+    }
+    
+    .alert .alert-heading {
+        font-size: 16px !important;
+    }
+    
+    .alert p {
+        font-size: 12px !important;
+    }
+    
+    /* Calendar cells */
+    .calendar-day {
+        min-height: 60px !important;
+    }
+    
+    /* Modal dialogs full screen */
+    .modal-dialog {
+        margin: 0 !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+    }
+    
+    .modal-content {
+        height: 100% !important;
+        border-radius: 0 !important;
+    }
+    
+    .modal-body {
+        overflow-y: auto !important;
+    }
+}
+
+/* --- Utility Classes for Mobile --- */
+@media (max-width: 768px) {
+    /* Hide on mobile */
+    .hide-mobile {
+        display: none !important;
+    }
+    
+    /* Show only on mobile */
+    .show-mobile {
+        display: block !important;
+    }
+    
+    /* Full width on mobile */
+    .full-width-mobile {
+        width: 100% !important;
+    }
+    
+    /* Stack columns on mobile */
+    .stack-mobile {
+        flex-direction: column !important;
+    }
+    
+    /* Center text on mobile */
+    .text-center-mobile {
+        text-align: center !important;
+    }
+    
+    /* Reduce margin on mobile */
+    .mb-mobile-2 {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Reduce padding on mobile */
+    .p-mobile-2 {
+        padding: 0.5rem !important;
+    }
+}
+
+/* --- Navbar Mobile Improvements --- */
+@media (max-width: 991px) {
+    .navbar-brand img {
+        max-height: 35px !important;
+    }
+    
+    .navbar-toggler {
+        padding: 4px 8px !important;
+        font-size: 1rem !important;
+    }
+    
+    .navbar-collapse {
+        background-color: var(--text-color);
+        padding: 10px !important;
+        border-radius: 8px;
+        margin-top: 10px !important;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 8px 15px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* --- Footer Mobile Improvements --- */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 2rem 1rem 1rem !important;
+    }
+    
+    .site-footer h5 {
+        font-size: 16px !important;
+    }
+    
+    .site-footer p,
+    .site-footer a {
+        font-size: 12px !important;
+    }
+    
+    .footer-copyright {
+        font-size: 11px !important;
+        padding-top: 1rem !important;
+    }
+}
+
+/* --- Scroll Optimization for Mobile --- */
+@media (max-width: 768px) {
+    /* Horizontal scroll containers */
+    .overflow-auto {
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    /* Custom scrollbar for mobile */
+    ::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+}
+
+/* --- Touch-Friendly Interactions --- */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    .btn,
+    .form-control,
+    .form-select,
+    .nav-link,
+    a {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .service-item:hover,
+    .menu-item-hover:hover,
+    .recipe-card:hover {
+        transform: none !important;
+    }
+}
+
+/* --- Performance Optimizations --- */
+@media (max-width: 768px) {
+    /* Disable complex animations on mobile */
+    .wow,
+    .animated {
+        animation: none !important;
+    }
+    
+    /* Simplify transitions */
+    * {
+        transition-duration: 0.2s !important;
+    }
+    
+    /* Optimize image rendering */
+    img {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* --- Landscape Mode Adjustments --- */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-header {
+        padding-top: 50px !important;
+        padding-bottom: 20px !important;
+    }
+    
+    .modal-dialog {
+        max-height: 90vh !important;
+    }
+    
+    .table-responsive {
+        max-height: 70vh !important;
+        overflow-y: auto !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar-nav .nav-item {
+        text-align: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .navbar-nav .nav-item:last-child {
+        border-bottom: none;
+    }
+    
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .view-toggle-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    #show-progress-btn {
+        right: 10px;
+    }
+    
+    #show-banner-btn {
+        left: 10px;
+    }
+    
+    .hero-header {
+        padding-top: 100px !important; /* ลดระยะห่าง */
+    }
+}
+
+    .meal-icons i {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 0.85rem;
+    }
+    
+    .meal-content img {
+        height: 100px; /* ลดความสูงรูปภาพ */
+    }
+    
+    .meal-info h6 {
+        font-size: 0.8rem;
+    }
+    
+    .meal-info .calories {
+        font-size: 0.7rem;
+    }
+    
+    .plan-day-timeline {
+        padding-bottom: 10px;
+    }
+
+@media (max-width: 768px) {
+    .health-card {
+        padding: 1rem !important; /* ลด padding */
+    }
+    
+    .health-card h5 {
+        font-size: 0.9rem;
+    }
+    
+    .health-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* ปรับ scrollbar ให้เห็นชัดขึ้น */
+    .row.flex-nowrap.overflow-auto::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .row.flex-nowrap.overflow-auto::-webkit-scrollbar-thumb {
+        background-color: #2FAAA8;
+        border-radius: 10px;
+    }
+}
+
+/*Custom plan*/
+@media (max-width: 991px) {
+    /* Planner Modal */
+    #plannerModal .modal-dialog {
+        max-width: 95%;
+        margin: 0.5rem;
+    }
+    
+    #plannerModal .row.g-4 {
+        flex-direction: column;
+    }
+    
+    #plannerModal .col-lg-4,
+    #plannerModal .col-lg-8 {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    /* Search Section */
+    .planner-section {
+        padding: 1rem;
+    }
+    
+    #search-results .recipe-search-item {
+        margin-bottom: 0.75rem;
+    }
+    
+    #search-results img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    /* Meal Planning Cards */
+    .card {
+        margin-bottom: 0.75rem;
+    }
+    
+    .card-header {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+    
+    /* Nutrition Summary Grid */
+    .nutrition-summary-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem;
+    }
+    
+    .nutrition-stat-card {
+        padding: 0.5rem;
+    }
+    
+    .nutrition-stat-card .label {
+        font-size: 0.75rem;
+    }
+    
+    .nutrition-stat-card .value {
+        font-size: 1rem;
+    }
+}
+
+/* === Progress Tracker Mobile Container === */
+@media (max-width: 768px) {
+    #progress-tracker-view .container-fluid {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    #progress-tracker-view .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    #progress-tracker-view .col-12 {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Search Filters */
+    .row.g-2 .col-md-6 {
+        width: 100%;
+    }
+    
+    .form-label {
+        font-size: 0.85rem;
+    }
+    
+    .form-control-sm,
+    .form-select-sm {
+        font-size: 0.8rem;
+    }
+    
+    /* Meal Cards */
+    .btn-group {
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    
+    .btn-group .btn-sm {
+        flex: 1 1 30%;
+        font-size: 0.7rem;
+        padding: 0.25rem;
+    }
+}
+
+/* === Mobile Day Navigation System === */
+@media (max-width: 768px) {
+    .mobile-day-navigator {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .day-nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .nav-arrow-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #2FAAA8;
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-arrow-btn:disabled {
+        background-color: #ccc;
+        opacity: 0.5;
+    }
+
+    .nav-arrow-btn:not(:disabled):active {
+        transform: scale(0.9);
+    }
+
+    .current-day-info {
+        flex: 1;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .current-day-info h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #212529;
+    }
+
+    .current-day-info small {
+        color: #6c757d;
+        font-size: 0.85rem;
+    }
+
+    .calendar-view-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2FAAA8 0%, #B7D971 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(47, 170, 168, 0.4);
+        font-size: 1.5rem;
+        z-index: 100;
+        transition: all 0.3s ease;
+    }
+
+    .calendar-view-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Hide timeline on mobile */
+    .plan-day-timeline {
+        display: none !important;
+    }
+
+    /* Current day card display */
+    .current-day-display {
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 15px;
+    }
+}
+
+/* === Mini Calendar Modal === */
+.mini-calendar-modal .modal-dialog {
+    max-width: 90%;
+    margin: 1.75rem auto;
+}
+
+@media (max-width: 768px) {
+    .mini-calendar-modal .modal-dialog {
+        max-width: 95%;
+        margin: 0.5rem;
+    }
+}
+
+.mini-calendar-container {
+    padding: 15px;
+    overflow-x: auto;
+}
+
+.mini-calendar-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 4px;
+    table-layout: fixed; /* บังคับให้คอลัมน์เท่ากัน */
+}
+
+.mini-calendar-table th {
+    text-align: center;
+    padding: 10px 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #495057;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    width: calc(100% / 7); /* แบ่งเท่าๆ 7 วัน */
+}
+
+.mini-calendar-table td {
+    text-align: center;
+    padding: 0;
+    height: 60px;
+    vertical-align: middle;
+    width: calc(100% / 7); /* แบ่งเท่าๆ 7 วัน */
+}
+
+.mini-calendar-day {
+    width: 100%;
+    height: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    padding: 8px 4px;
+    background-color: #fff;
+    border: 2px solid #e9ecef;
+}
+
+.mini-calendar-day:hover:not(.disabled) {
+    background-color: #e7f3ff;
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* === สีสำหรับแต่ละสถานะ === */
+.mini-calendar-day.has-plan {
+    background: linear-gradient(135deg, #d1e7dd 0%, #a3cfbb 100%);
+    border: 2px solid #198754;
+    font-weight: 600;
+    color: #0f5132;
+}
+
+.mini-calendar-day.completed {
+    background: linear-gradient(135deg, #cfe2ff 0%, #9ec5fe 100%);
+    border: 2px solid #0d6efd;
+    font-weight: 600;
+    color: #084298;
+}
+
+.mini-calendar-day.active-day {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffda6a 100%);
+    border: 3px solid #ffc107;
+    font-weight: 700;
+    color: #664d03;
+    box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+}
+
+.mini-calendar-day.disabled {
+    color: #adb5bd;
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    opacity: 0.5;
+    border-color: #dee2e6;
+}
+
+/* === ตัวเลขวันที่ === */
+.mini-calendar-day .day-number {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.mini-calendar-day .day-status {
+    font-size: 0.75rem;
+    line-height: 1;
+    font-weight: 600;
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 576px) {
+    .mini-calendar-table th {
+        font-size: 0.75rem;
+        padding: 6px 2px;
+    }
+    
+    .mini-calendar-table td {
+        height: 50px;
+    }
+    
+    .mini-calendar-day {
+        min-height: 50px;
+        padding: 4px 2px;
+        border-radius: 8px;
+    }
+    
+    .mini-calendar-day .day-number {
+        font-size: 0.95rem;
+    }
+    
+    .mini-calendar-day .day-status {
+        font-size: 0.65rem;
+    }
+}
+
+/* === Legend สี === */
+.mini-calendar-modal .modal-body .d-flex.gap-3 {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.mini-calendar-modal .modal-body .d-flex.gap-3 span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.mini-calendar-modal .modal-body .d-flex.gap-3 span i {
+    font-size: 1rem;
+}
+
+/* Desktop - show both views */
+@media (min-width: 769px) {
+    .mobile-day-navigator {
+        display: none !important;
+    }
+    
+    .calendar-view-btn {
+        position: fixed;
+        top: 150px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2FAAA8 0%, #B7D971 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(47, 170, 168, 0.4);
+        font-size: 1.3rem;
+        z-index: 100;
+        transition: all 0.3s ease;
+    }
+}
+
+/* === Mobile Meal Checking UI === */
+.meal-progress-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.meal-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.meal-dot {
+    width: 40px;
+    height: 8px;
+    background-color: #dee2e6;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.meal-dot.done {
+    background: linear-gradient(90deg, #2FAAA8 0%, #B7D971 100%);
+}
+
+.meal-dot.current {
+    background-color: #0d6efd;
+    height: 10px;
+}
+
+.current-meal-section {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.meal-header {
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.meal-header h5 {
+    color: #2FAAA8;
+    font-weight: 700;
+    margin: 0;
+}
+
+.meal-card {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.meal-card.no-recipe {
+    padding: 30px;
+    text-align: center;
+}
+
+.meal-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block; /* เพิ่มบรรทัดนี้ */
+    margin: 0 auto; /* เพิ่มบรรทัดนี้เพื่อจัดกลาง */
+}
+
+.meal-info-section {
+    padding: 15px;
+    text-align: center;
+}
+
+.meal-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 8px;
+}
+
+.meal-calories {
+    font-size: 0.95rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-meal-btn {
+    width: calc(100% - 30px);
+    margin: 0 15px 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #2FAAA8 0%, #B7D971 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(47, 170, 168, 0.3);
+}
+
+.check-meal-btn:active {
+    transform: scale(0.95);
+}
+
+.check-meal-btn.secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.check-circle {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+
+.check-meal-btn:active .check-circle {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: rotate(360deg);
+}
+
+/* Success Animation */
+.success-animation {
+    animation: successPulse 1s ease-in-out;
+}
+
+@keyframes successPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.stats-summary {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.stat-item i {
+    font-size: 1.5rem;
+}
+
+/* Smooth transition for day change */
+#mobile-day-content {
+    transition: opacity 0.3s ease;
+}
+
+.meal-card {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* จัดกลางทุกอย่างใน card */
+}
+
+.meal-info-section {
+    padding: 15px;
+    text-align: center;
+    width: 100%; /* ให้ครอบคลุมความกว้างเต็ม */
+}
+
+/* === [FIX] Desktop Horizontal Scrollable Plan Timeline === */
+.plan-day-timeline-desktop {
+    overflow-x: auto; /* เปิดใช้งานการเลื่อนในแกน X (แนวนอน) เมื่อเนื้อหาล้น */
+    overflow-y: hidden; /* ปิดการเลื่อนในแกน Y (แนวตั้ง) ที่ไม่จำเป็น */
+    padding-bottom: 20px; /* เพิ่มพื้นที่ด้านล่างสำหรับ Scrollbar จะได้ไม่ติดเนื้อหาอื่น */
+    -webkit-overflow-scrolling: touch; /* ทำให้การเลื่อนลื่นบนอุปกรณ์ทัชสกรีน */
+}
+
+/* กำหนดให้การ์ดแต่ละใบมีความกว้างคงที่และไม่หดหรือขยายตามพื้นที่
+  โค้ดนี้มีความสำคัญเพื่อให้การ์ดทุกใบมีขนาดเท่ากันและเรียงต่อกันไป
+*/
+.plan-day-timeline-desktop .progress-day-card {
+    flex: 0 0 280px; /* ไม่ต้องขยาย (grow:0), ไม่ต้องหด (shrink:0), ความกว้างเริ่มต้น 280px */
+}
+
+/* === [Optional] ตกแต่ง Scrollbar ให้สวยงาม === */
+.plan-day-timeline-desktop::-webkit-scrollbar {
+    height: 10px; /* ความสูงของแถบ scrollbar */
+}
+
+.plan-day-timeline-desktop::-webkit-scrollbar-track {
+    background: #f1f1f1; /* สีพื้นหลังของราง scrollbar */
+    border-radius: 10px;
+}
+
+.plan-day-timeline-desktop::-webkit-scrollbar-thumb {
+    background: #2FAAA8; /* ใช้สีหลักของเว็บเป็นสีของตัวเลื่อน */
+    border-radius: 10px;
+}
+
+.plan-day-timeline-desktop::-webkit-scrollbar-thumb:hover {
+    background: #258a88; /* สีจะเข้มขึ้นเล็กน้อยเมื่อเอาเมาส์ไปชี้ */
+}
